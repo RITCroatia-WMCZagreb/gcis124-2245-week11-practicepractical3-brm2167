@@ -6,11 +6,42 @@
 */
 
 public class FunWithThreads1 {
+    class MyThread implements Runnable {
+        private int id;
+        private static int lastId = 0;
+
+        /**
+         * Constructs a new instance of the MyThread class with an automatically
+         * incremented ID.
+         */
+        public MyThread() {
+            this.id = ++lastId;
+        }
+
+        /**
+         * Counts from 0-9 in the command line, printing the thread and number
+         * every second until complete.
+         */
+        @Override
+        public void run() {
+            for (int i = 0; i < 10; i++) {
+                System.out.printf("Thread %d %d\n", id, i);
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
 
 
     //Constructor of FunWithThreads
     public FunWithThreads1(){
         System.out.println("MAIN START");
+
+        new Thread(new MyThread()).start();
+        new Thread(new MyThread()).start();
        
         System.out.println("MAIN END");
     }
