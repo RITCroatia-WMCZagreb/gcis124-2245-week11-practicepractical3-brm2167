@@ -50,75 +50,64 @@ to code this any way you want as long as the threads run concurrently.
 
 */
 
+/*
+@ASSESSME.USERID: brm2167
+@ASSESSME.AUTHOR: Benjamin R. Metzger
+@ASSESSME.DESCRIPTION: PRACTICEPRACTICAL3
+@ASSESSME.ANALYZE: YES
+*/
+
 import java.util.ArrayList;
 
 public class SimpleThreading {
-
     private int counter = 90;
-    private Object lock = new Object();
 
-    public SimpleThreading(){
-        ArrayList<Thread> threads = new ArrayList<Thread>();
+    /**
+     * Subtracts an amount from the counter.
+     * @param amount the amount to subtract from the counter
+     */
+    public synchronized void decrement(int threadid, int amount) {
+        if (counter == 0) return;
+        System.out.printf(
+            "Thread %d counter %d\n", threadid,  counter -= amount
+        );
+    }
 
-        for(int i=1;i<=5;i++){
-            Thread t = new Thread(new InnerThread(i));
-            t.start();//run the threads
-            threads.add(t);
-            /*try {
-                t.join();
-            } catch (InterruptedException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }//nono, do not call this here*/
+    class Decrementor extends Thread {
+        private int id;
+        private static int lastId = 0;
+
+        /**
+         * Constructs a new instance of the Decrementor class with an
+         * automatically incremented ID.
+         */
+        public Decrementor() {
+            this.id = ++lastId;
         }
 
-        for(Thread t: threads){
-            try {
-                t.join();
-            } catch (InterruptedException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
+        /**
+         * Decrements from the shared counter until it reaches 0.
+         */
+        @Override
+        public void run() {
+            while (counter > 0) {
+                decrement(id, 3);
+                try {
+                    Thread.sleep(2);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         }
-
-
-        System.out.println("Main: at end counter = " + counter);
+    }
+   
+    public SimpleThreading(){
+        for (int i = 0; i < 5; i++) new Decrementor().start();
     }
 
     public static void main(String[] args) {
         new SimpleThreading();
     }
-
-
-    class InnerThread implements Runnable{
-
-        private int name;
-        public InnerThread(int name){
-            this.name = name;
-        }
-
-        @Override
-        public void run() {
-            for(int i=0;i<10;i++){
-
-              
-
-                synchronized(lock){
-                    if(counter<=0) break;
-                    counter = counter -3;
-                    System.out.println("Thread " + name + " counter " + counter);
-                }
-                
-
-                try {
-                    Thread.sleep(2);
-                } catch (InterruptedException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
-            }
-        }
-        
-    }
+    
     
 }

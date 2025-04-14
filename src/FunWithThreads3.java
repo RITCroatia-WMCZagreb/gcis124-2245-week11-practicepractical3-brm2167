@@ -6,7 +6,7 @@
 */
 
 public class FunWithThreads3 {
-    private static int counter = 0;
+    private int counter = 0;
 
     /**
      * Increments the counter by 1.
