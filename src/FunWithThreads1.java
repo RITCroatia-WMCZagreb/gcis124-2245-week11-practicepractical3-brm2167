@@ -24,6 +24,7 @@ public class FunWithThreads1 {
          */
         @Override
         public void run() {
+            System.out.printf("Thread start: Thread %d\n", id);
             for (int i = 0; i < 10; i++) {
                 System.out.printf("Thread %d %d\n", id, i);
                 try {
@@ -32,6 +33,7 @@ public class FunWithThreads1 {
                     e.printStackTrace();
                 }
             }
+            System.out.printf("Thread end: Thread %d\n", id);
         }
     }
 
@@ -40,8 +42,7 @@ public class FunWithThreads1 {
     public FunWithThreads1(){
         System.out.println("MAIN START");
 
-        new Thread(new MyThread()).start();
-        new Thread(new MyThread()).start();
+        for (int i = 0; i < 2; i++) new Thread(new MyThread()).start();
        
         System.out.println("MAIN END");
     }

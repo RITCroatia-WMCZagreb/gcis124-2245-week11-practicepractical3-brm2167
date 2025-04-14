@@ -1,10 +1,61 @@
-public class FunWithThreads2 {
+/*
+@ASSESSME.USERID: brm2167
+@ASSESSME.AUTHOR: Benjamin R. Metzger
+@ASSESSME.DESCRIPTION: PRACTICEPRACTICAL3
+@ASSESSME.ANALYZE: YES
+*/
 
+public class FunWithThreads2 {
+    class Counter extends Thread {
+        private int id;
+        private static int lastId = 0;
+
+        /**
+         * Constructs a new instance of the Counter class with an automatically
+         * incremented ID.
+         */
+        public Counter() {
+            this.id = ++lastId;
+        }
+
+        /**
+         * Counts from 0-9 in the command line, printing the thread and number
+         * every second until complete.
+         */
+        @Override
+        public void run() {
+            System.out.printf("Thread start: Thread %d\n", id);
+            for (int i = 0; i < 10; i++) {
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                System.out.printf("Thread %d %d\n", id, i);
+            }
+            System.out.printf("Thread end: Thread %d\n", id);
+        }
+    }
 
     //Constructor of FunWithThreads
     public FunWithThreads2(){
         System.out.println("MAIN START");
         
+        Thread counter1 = new Counter();
+        counter1.start();
+        try {
+            counter1.join(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        new Counter().start();
+        try {
+            counter1.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
         System.out.println("MAIN END");
     }
 
