@@ -57,13 +57,11 @@ to code this any way you want as long as the threads run concurrently.
 @ASSESSME.ANALYZE: YES
 */
 
-import java.util.ArrayList;
-
 public class SimpleThreading {
     private int counter = 90;
 
     /**
-     * Subtracts an amount from the counter.
+     * Subtracts an amount from the counter and prints it to the console.
      * @param amount the amount to subtract from the counter
      */
     public synchronized void decrement(int threadid, int amount) {
