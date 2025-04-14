@@ -1,3 +1,10 @@
+/*
+@ASSESSME.USERID: brm2167
+@ASSESSME.AUTHOR: Benjamin R. Metzger
+@ASSESSME.DESCRIPTION: PRACTICEPRACTICAL3
+@ASSESSME.ANALYZE: YES
+*/
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.ArrayList;
@@ -16,15 +23,12 @@ public class Temperature {
      * @return
      */
     public static TemperatureScale createF2C() {
-        TemperatureScale f2C = null;
-
-        // Delete from here
-       
-
-        
-        // to here
-
-        return f2C;
+        return new TemperatureScale() {
+            @Override
+            public double convert(double temperature) {
+                return (temperature - 32) / 1.8;
+            }
+        };
     }
 
     /**
@@ -35,13 +39,9 @@ public class Temperature {
      * @return
      */
     public static TemperatureScale createC2F() {
-        TemperatureScale c2F = null;
-
-        // Delete from here
-       
-        // to here
-
-        return c2F;
+        return (temperature) -> {
+            return (temperature * 1.8) + 32;
+        };
     }
 
     public static void main(String[] args) {
@@ -60,28 +60,21 @@ public class Temperature {
             //    store result in fahrenheitTemps
             // 2. Use f2C variable to convert the temperature to Celsius and
             //    store result in celciusTemps
-        // Delete from here
-       
-
-        // to here
+        temps.stream().forEach((temp) -> {
+            celsiusTemps.add(f2C.convert(temp));
+            fahrenheitTemps.add(c2F.convert(temp));
+        });
 
         // Part D
         // Using stream(), filter(), and forEach(), print on a separate line all
         // elements of fahrenheitTemps that are *above* feezing (32F)
-        // Delete from here
+        fahrenheitTemps.stream().filter(temp -> (temp > 32)).forEach(System.out::println);
       
-       
-      
-        // to here
 
         // Part E
         // Using streams(), filter(), and forEach(), print on a separate line all
         // elements of celsiusTemps that are *below* freezing (0C)
-        // Delete from here
-      
-    
-      
-        // to here
+        celsiusTemps.stream().filter(temp -> (temp < 0)).forEach(System.out::println);
     }
     
 }

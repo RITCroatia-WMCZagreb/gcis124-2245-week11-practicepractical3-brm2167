@@ -20,6 +20,14 @@ output would be:
   12.0
  */
 
+/*
+@ASSESSME.USERID: brm2167
+@ASSESSME.AUTHOR: Benjamin R. Metzger
+@ASSESSME.DESCRIPTION: PRACTICEPRACTICAL3
+@ASSESSME.ANALYZE: YES
+*/
+
+
 import java.util.Arrays;
 import java.util.List;
 
